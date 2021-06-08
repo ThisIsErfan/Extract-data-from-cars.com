@@ -6,9 +6,9 @@ import re
 year_list = list()
 make_list = list()
 price_list = list()
-#body_style_list = list()
-#MPG_list = list()
-#seats_list = list()
+body_style_list = list()
+MPG_list = list()
+seats_list = list()
 
 html_page = requests.get(r"https://www.cars.com/research/sports/?catId=448&rn=0&rpp=13")
 soup = BeautifulSoup(html_page.text, 'html.parser')
@@ -36,22 +36,22 @@ for link in links:
 
     some_list = list()
 
-    #for some in information_some:
-        #s_re = re.sub(r"\s+", " ", some.text).strip()
-        #some_list.append(s_re)
+    for some in information_some:
+        s_re = re.sub(r"\s+", " ", some.text).strip()
+        some_list.append(s_re)
 
-    #body_style, seats, MPG = some_list
-
-    #body_style_list.append(body_style)
-    #seats_list.append(seats)
-    #MPG_list.append(MPG)
+        if len(some_list) == 3:
+            body_style, seats, MPG = some_list
+            body_style_list.append(body_style)
+            seats_list.append(seats)
+            MPG_list.append(MPG)
 
 data = {
     "(Year)" : year_list,
     "(Make)" : make_list,
-    #"(Body Style)" : body_style_list,
-    #"(Seats)" : seats_list,
-    #"(MPG)" : MPG_list,
+    "(Body Style)" : body_style_list,
+    "(Seats)" : seats_list,
+    "(MPG)" : MPG_list,
     "(Price)" : price_list
 }
 
