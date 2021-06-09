@@ -42,9 +42,10 @@ for link in links:
 
         if len(some_list) == 3:
             body_style, seats, MPG = some_list
+            
             body_style_list.append(body_style)
-            seats_list.append(seats)
-            MPG_list.append(MPG)
+            seats_list.append(seats.split()[0])
+            MPG_list.append(MPG.split()[0])
 
 data = {
     "(Year)" : year_list,
