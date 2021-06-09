@@ -20,19 +20,21 @@ for link in links:
     soup_link = BeautifulSoup(link_page.text, 'html.parser')
 
     information_make = soup_link.find_all('h1', attrs= {"class" : "cui-page-section__title"})
-    information_price = soup_link.find_all('div', attrs= {"class" : "mmy-header__msrp mmy-header__info-border"})
-    information_some = soup_link.find_all('div', attrs= {"class" : "list-specs__value"})
-
+    
     for make in information_make:
         m_re = re.sub(r"\s+", " ", make.text)
         year = m_re.strip().split()[0]
         make = " ".join(m_re.strip().split()[1:])
         year_list.append(year)
         make_list.append(make)
+    
+    information_price = soup_link.find_all('div', attrs= {"class" : "mmy-header__msrp mmy-header__info-border"})
 
     for price in information_price:
         p_re = re.sub(r"\s+", " ", price.text)
         price_list.append(" ".join(p_re.strip().split()[0:3]))
+
+    information_some = soup_link.find_all('div', attrs= {"class" : "list-specs__value"})
 
     some_list = list()
 
@@ -42,18 +44,18 @@ for link in links:
 
         if len(some_list) == 3:
             body_style, seats, MPG = some_list
-            
+
             body_style_list.append(body_style)
             seats_list.append(seats.split()[0])
             MPG_list.append(MPG.split()[0])
 
 data = {
     "(Year)" : year_list,
-    "(Make)" : make_list,
+    "(Make and Model)" : make_list,
     "(Body Style)" : body_style_list,
     "(Seats)" : seats_list,
     "(MPG)" : MPG_list,
-    "(Price)" : price_list
+    "(Price - MSRP)" : price_list
 }
 
 df = pd.DataFrame(data)
